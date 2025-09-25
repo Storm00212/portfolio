@@ -4,8 +4,43 @@ import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 
 import CanvasLoader from "../pages/Loader";
 
-const Computers = ({ isMobile }) => {
+const Computers = ({ isSmall, isMobile, isTablet }) => {
   const computer = useGLTF("./desktop_pc/scene.gltf");
+
+  // Responsive scaling and positioning
+  const getResponsiveProps = () => {
+    if (isSmall) {
+      return {
+        scale: 0.5,
+        position: [0, -2.5, -2.5],
+        cameraPosition: [20, 3, 5],
+        fov: 35
+      };
+    } else if (isMobile) {
+      return {
+        scale: 0.6,
+        position: [0, -3, -2.2],
+        cameraPosition: [20, 3, 5],
+        fov: 30
+      };
+    } else if (isTablet) {
+      return {
+        scale: 0.7,
+        position: [0, -3.25, -1.8],
+        cameraPosition: [20, 3, 5],
+        fov: 28
+      };
+    } else {
+      return {
+        scale: 0.75,
+        position: [0, -3.25, -1.5],
+        cameraPosition: [20, 3, 5],
+        fov: 25
+      };
+    }
+  };
+
+  const { scale, position } = getResponsiveProps();
 
   return (
     <mesh>
@@ -19,8 +54,8 @@ const Computers = ({ isMobile }) => {
       <pointLight intensity={1} />
       <primitive
         object={computer.scene}
-        scale={isMobile ? 0.7 : 0.75}
-        position={isMobile ? [0, -3, -2.2] : [0, -3.25, -1.5]}
+        scale={scale}
+        position={position}
         rotation={[-0.01, -0.2, -0.1]}
       />
     </mesh>
@@ -28,34 +63,57 @@ const Computers = ({ isMobile }) => {
 };
 
 const ComputersCanvas = () => {
+  const [isSmall, setIsSmall] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
 
   useEffect(() => {
-    // Add a listener for changes to the screen size
-    const mediaQuery = window.matchMedia("(max-width: 500px)");
+    // Media queries for different screen sizes
+    const smallQuery = window.matchMedia("(max-width: 640px)");
+    const mobileQuery = window.matchMedia("(max-width: 768px)");
+    const tabletQuery = window.matchMedia("(max-width: 1024px)");
 
-    // Set the initial value of the `isMobile` state variable
-    setIsMobile(mediaQuery.matches);
+    // Set initial values
+    setIsSmall(smallQuery.matches);
+    setIsMobile(mobileQuery.matches);
+    setIsTablet(tabletQuery.matches && !mobileQuery.matches);
 
-    // Define a callback function to handle changes to the media query
-    const handleMediaQueryChange = (event) => {
-      setIsMobile(event.matches);
+    // Handlers
+    const handleSmallChange = (e) => setIsSmall(e.matches);
+    const handleMobileChange = (e) => {
+      setIsMobile(e.matches);
+      setIsTablet(tabletQuery.matches && !e.matches);
     };
+    const handleTabletChange = (e) => setIsTablet(e.matches && !mobileQuery.matches);
 
-    // Add the callback function as a listener for changes to the media query
-    mediaQuery.addEventListener("change", handleMediaQueryChange);
+    // Add listeners
+    smallQuery.addEventListener("change", handleSmallChange);
+    mobileQuery.addEventListener("change", handleMobileChange);
+    tabletQuery.addEventListener("change", handleTabletChange);
 
-    // Remove the listener when the component is unmounted
+    // Cleanup
     return () => {
-      mediaQuery.removeEventListener("change", handleMediaQueryChange);
+      smallQuery.removeEventListener("change", handleSmallChange);
+      mobileQuery.removeEventListener("change", handleMobileChange);
+      tabletQuery.removeEventListener("change", handleTabletChange);
     };
   }, []);
+
+  // Get responsive camera settings
+  const getCameraSettings = () => {
+    if (isSmall) return { position: [20, 3, 5], fov: 35 };
+    if (isMobile) return { position: [20, 3, 5], fov: 30 };
+    if (isTablet) return { position: [20, 3, 5], fov: 28 };
+    return { position: [20, 3, 5], fov: 25 };
+  };
+
+  const cameraSettings = getCameraSettings();
 
   return (
     <Canvas
       frameloop='demand'
       dpr={[1, 1.5]}
-      camera={{ position: [20, 3, 5], fov: 25 }}
+      camera={cameraSettings}
       gl={{ preserveDrawingBuffer: true }}
     >
       <Suspense fallback={<CanvasLoader />}>
@@ -64,7 +122,7 @@ const ComputersCanvas = () => {
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}
         />
-        <Computers isMobile={isMobile} />
+        <Computers isSmall={isSmall} isMobile={isMobile} isTablet={isTablet} />
       </Suspense>
 
       <Preload all />
