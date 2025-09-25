@@ -9,11 +9,22 @@ import {
 } from "@react-three/drei";
 
 import CanvasLoader from "../pages/Loader";
-import { isLowEndDevice } from "../utils/device";
+import { isLowEndDevice, isVeryLowEndDevice } from "../utils/device";
 
 const Ball = (props) => {
   const [decal] = useTexture([props.imgUrl]);
   const lowEnd = isLowEndDevice();
+  const veryLowEnd = isVeryLowEndDevice();
+
+  // For very low-end devices, show a simple fallback
+  if (veryLowEnd) {
+    return (
+      <mesh scale={2.75}>
+        <sphereGeometry args={[1, 8, 8]} />
+        <meshBasicMaterial color="#666" />
+      </mesh>
+    );
+  }
 
   const ballContent = (
     <>
@@ -46,6 +57,17 @@ const Ball = (props) => {
 };
 
 const BallCanvas = React.memo(({ icon }) => {
+  const veryLowEnd = isVeryLowEndDevice();
+
+  // For very low-end devices, show a simple 2D fallback
+  if (veryLowEnd) {
+    return (
+      <div className="w-28 h-28 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg">
+        <span className="text-white text-2xl">⚡</span>
+      </div>
+    );
+  }
+
   return (
     <Canvas
       frameloop='demand'

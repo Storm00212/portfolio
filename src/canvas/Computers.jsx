@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 
 import CanvasLoader from "../pages/Loader";
+import { isVeryLowEndDevice } from "../utils/device";
 
 const Computers = ({ isSmall, isMobile, isTablet }) => {
   const computer = useGLTF("./desktop_pc/scene.gltf");
@@ -108,6 +109,22 @@ const ComputersCanvas = () => {
   };
 
   const cameraSettings = getCameraSettings();
+  const veryLowEnd = isVeryLowEndDevice();
+
+  // For very low-end devices, show a simple static image instead of 3D
+  if (veryLowEnd) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="text-center p-8">
+          <div className="w-32 h-32 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+            <span className="text-white text-4xl">💻</span>
+          </div>
+          <p className="text-white text-lg">Interactive 3D Computer</p>
+          <p className="text-gray-400 text-sm mt-2">Best viewed on desktop or high-end mobile devices</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Canvas
