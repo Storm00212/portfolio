@@ -17,7 +17,8 @@ const renderContent = {
     1: (
         <h1 className=" text-base sm:text-lg sm:leading-snug text-center neo-brutalism-blue py-2 px-4 text-white
         mx-5">Hi👋 I am  <span className="font-semibold">Paul</span>
-        <br />An Electrical and Electronics engineer🧑‍🏭 from Kenya</h1>
+        <br />An Electrical and Electronics engineer🧑‍🏭 from Kenya<br />
+        Let us fly across my Island🛩️</h1>
     ),
     2: (
         <InfoBox 

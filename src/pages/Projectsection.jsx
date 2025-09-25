@@ -1,12 +1,13 @@
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { Suspense, useState, useMemo } from 'react';
+import { Suspense, useState, useMemo, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Center, OrbitControls } from '@react-three/drei';
 
 import { Projects } from '../constants/index.js';
 import CanvasLoader from '../canvas/Loading.jsx';
 import DemoComputer from '../canvas/DemoComputer.jsx';
+import ErrorBoundary from '../components/ErrorBoundary.jsx';
 
 const projectCount = Projects.length;
 
@@ -117,18 +118,28 @@ const Projectsection = () => {
         </div>
 
         <div className="border border-black-300 bg-black-200 rounded-lg h-96 md:h-full">
-          <Canvas dpr={[1, 1.5]}>
-            <ambientLight intensity={Math.PI} />
-            <directionalLight position={[10, 10, 5]} />
-            <Center>
-              <Suspense fallback={<CanvasLoader />}>
-                <group scale={2} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
-                  <DemoComputer key={selectedProjectIndex} texture={currentProject.texture} />
-                </group>
-              </Suspense>
-            </Center>
-            <OrbitControls maxPolarAngle={Math.PI / 2} enableZoom={false} />
-          </Canvas>
+          <ErrorBoundary fallback={
+            <div className="w-full h-full flex items-center justify-center p-8">
+              <div className="text-center">
+                <div className="text-4xl mb-4">💻</div>
+                <p className="text-white text-lg">Interactive 3D Demo</p>
+                <p className="text-gray-400 text-sm mt-2">Best viewed on desktop or high-end devices</p>
+              </div>
+            </div>
+          }>
+            <Canvas dpr={[1, 1.5]}>
+              <ambientLight intensity={Math.PI} />
+              <directionalLight position={[10, 10, 5]} />
+              <Center>
+                <Suspense fallback={<CanvasLoader />}>
+                  <group scale={2} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
+                    <DemoComputer key={selectedProjectIndex} texture={currentProject.texture} />
+                  </group>
+                </Suspense>
+              </Center>
+              <OrbitControls maxPolarAngle={Math.PI / 2} enableZoom={false} />
+            </Canvas>
+          </ErrorBoundary>
         </div>
       </div>
     </section>
