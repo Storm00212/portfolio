@@ -9,15 +9,17 @@ import {
 } from "@react-three/drei";
 
 import CanvasLoader from "../pages/Loader";
+import { isLowEndDevice } from "../utils/device";
 
 const Ball = (props) => {
   const [decal] = useTexture([props.imgUrl]);
+  const lowEnd = isLowEndDevice();
 
-  return (
-    <Float speed={1.75} rotationIntensity={1} floatIntensity={2}>
+  const ballContent = (
+    <>
       <ambientLight intensity={0.25} />
       <directionalLight position={[0, 0, 0.05]} />
-      <mesh castShadow receiveShadow scale={2.75}>
+      <mesh scale={2.75}>
         <icosahedronGeometry args={[1, 1]} />
         <meshStandardMaterial
           color='#fff8eb'
@@ -33,15 +35,21 @@ const Ball = (props) => {
           flatShading
         />
       </mesh>
+    </>
+  );
+
+  return lowEnd ? ballContent : (
+    <Float speed={1} rotationIntensity={0.5} floatIntensity={1}>
+      {ballContent}
     </Float>
   );
 };
 
-const BallCanvas = ({ icon }) => {
+const BallCanvas = React.memo(({ icon }) => {
   return (
     <Canvas
       frameloop='demand'
-      dpr={[1, 2]}
+      dpr={[1, 1.5]}
       gl={{ preserveDrawingBuffer: true }}
     >
       <Suspense fallback={<CanvasLoader />}>
@@ -52,6 +60,6 @@ const BallCanvas = ({ icon }) => {
       <Preload all />
     </Canvas>
   );
-};
+});
 
 export default BallCanvas;

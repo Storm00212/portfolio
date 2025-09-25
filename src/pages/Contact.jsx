@@ -73,7 +73,7 @@ const Contact = () => {
   };
 
   return (
-    <section className='relative flex lg:flex-row flex-col max-container'>
+    <section className='w-full h-screen flex lg:flex-row flex-col p-8' style={{ background: 'linear-gradient(135deg, #0B1B26 0%, #1a1a2e 35%, #16213e 70%, #0f1419 100%)', color: '#fff' }}>
       {alert.show && <Alert {...alert} />}
 
       <div className='flex-1 min-w-[50%] flex flex-col'>
@@ -146,16 +146,10 @@ const Contact = () => {
             near: 0.1,
             far: 1000,
           }}
+          dpr={[1, 1.5]}
         >
-          <directionalLight position={[0, 0, 1]} intensity={2.5} />
-          <ambientLight intensity={1} />
-          <pointLight position={[5, 10, 0]} intensity={2} />
-          <spotLight
-            position={[10, 10, 10]}
-            angle={0.15}
-            penumbra={1}
-            intensity={2}
-          />
+          <directionalLight position={[0, 0, 1]} intensity={2} />
+          <ambientLight intensity={0.8} />
 
           <Suspense fallback={<Loader />}>
             <Fox

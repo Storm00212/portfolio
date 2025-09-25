@@ -45,31 +45,25 @@ const [currentStage, setCurrentStage] = useState(1);
   const [planeScale, planePosition] = adjustPlaneForScreenSize();
   return (
     <section className="w-full h-screen relative">
-      <div className='absolute top-28 left-0 right-0 z-10 flex items-center justify-center'>
-       {currentStage && <HomeInfo currentStage={currentStage} />}
+      <div className='absolute top-28 left-0 right-0 z-20 flex items-center justify-center'>
+        {currentStage && <HomeInfo currentStage={currentStage} />}
       </div>
       <Canvas
         className={`w-full h-screen bg-transparent ${
           isRotating ? "cursor-grabbing" : "cursor-grab"
         }`}
         camera={{ near: 0.1, far: 1000 }}
+        dpr={[1, 1.5]}
       >
         {/* Your 3D content goes here */}
         <Suspense fallback={<Loader />}>
-          <directionalLight position={[1, 1, 1]} intensity={2} />{" "}
-          {/** Light from a distant source like the sun. */}
+          <directionalLight position={[1, 1, 1]} intensity={1.5} />
           <ambientLight intensity={0.5} />
-          {/** Ambient light to illuminate the scene evenly. */}
-          <pointLight />
-          {/** Point light that emits light in all directions from a single point. Used in a room setting */}
-          <spotLight />
-          {/** Spot light that emits a cone of light in a specific direction. Used for focused lighting. */}
           <hemisphereLight
             skyColor="b1e1ff"
             groundColor="#000000"
-            intensity={0.5}
+            intensity={0.3}
           />
-          {/** Hemisphere light that simulates light from the sky and ground. Used for natural lighting. */}
           <Bird />
           <Sky  isRotating={isRotating}/>
           {/** Sky component that adds a rotating sky effect. */}

@@ -1,8 +1,8 @@
-import { Leva } from 'leva';
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useMediaQuery } from 'react-responsive';
 import { PerspectiveCamera } from '@react-three/drei';
+import { Leva } from 'leva';
 
 import Cube from '../canvas/Cube.jsx';
 import Rings from '../canvas/Rings.jsx';
@@ -13,6 +13,7 @@ import CanvasLoader from '../canvas/Loading.jsx';
 import HeroCamera from '../canvas/HeroCamera.jsx';
 import { calculateSizes } from '../constants/index.js';
 import { HackerRoom } from '../canvas/HackerRoom.jsx';
+import { isLowEndDevice } from '../utils/device.js';
 
 const Projecthero = () => {
   // Use media queries to determine screen size
@@ -21,6 +22,7 @@ const Projecthero = () => {
   const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1024 });
 
   const sizes = calculateSizes(isSmall, isMobile, isTablet);
+  const lowEnd = isLowEndDevice();
 
   return (
     <section className="min-h-screen w-full flex flex-col relative" id="home">
@@ -32,7 +34,7 @@ const Projecthero = () => {
       </div>
 
       <div className="w-full h-full absolute inset-0">
-        <Canvas className="w-full h-full">
+        <Canvas className="w-full h-full" dpr={[1, 1.5]}>
           <Suspense fallback={<CanvasLoader />}>
             {/* To hide controller */}
             <Leva hidden />
@@ -45,8 +47,8 @@ const Projecthero = () => {
             <group>
               <Target position={sizes.targetPosition} />
               <ReactLogo position={sizes.reactLogoPosition} />
-              <Rings position={sizes.ringPosition} />
-              <Cube position={sizes.cubePosition} />
+              {!lowEnd && <Rings position={sizes.ringPosition} />}
+              {!lowEnd && <Cube position={sizes.cubePosition} />}
             </group>
 
             <ambientLight intensity={1} />
@@ -64,4 +66,4 @@ const Projecthero = () => {
   );
 };
 
-export default Projecthero;
+export default React.memo(Projecthero);

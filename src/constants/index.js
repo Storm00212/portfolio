@@ -224,7 +224,7 @@ const testimonials = [
 const Projects = [
   {
     title: "Mern Chat Application",
-    description:
+    desc:
       "My very first web project, a chat application that allowed users to have real time messaging. This was also my first experience with mongodb and nodejs.",
     subdesc:
       "I used socket.io for real time communication between users as well as a secure jwt authentication and saved users,conversations and messages to node.js. Use of hooks really optimised my workflow here especially on the frontend.",
@@ -235,8 +235,8 @@ const Projects = [
       border: "0.2px solid rgba(208, 213, 221, 1)",
       boxShadow: "0px 0px 60px 0px rgba(35, 131, 96, 0.3)",
     },
-    logo: "/assets/chatapp.png",
-    texture: "/textures/project/project3.mp4",
+    logo: "/assets/chaticon.png",
+    texture: "/textures/project/project1.mp4",
     href: "https://github.com/Storm00212/mern-chat-app",
     spotlight: "/assets/spotlight3.png",
     tags: [
@@ -267,7 +267,7 @@ const Projects = [
     desc: "An application designed to help you achieve your fitness goals. It uses an AI powered voice assistant to talk to the client, get his/her fitness requirements then generate and save diet and workout plans for the user.",
     subdesc:
       "I used nextjs for the app interface and VAPI API for the voice assitant model and connected it to gemini to generate a response. I also used a convex database and clerk authentication for the backend,which is uncommon but effective and deployed it on vercel",
-    texture: "/textures/project/project4.mp4",
+    texture: "/textures/project/project2.mp4",
     logoStyle: {
       backgroundColor: "#0E1F38",
       border: "0.2px solid #0E2D58",
@@ -306,11 +306,11 @@ const Projects = [
   },
   {
     title: "Home Automation System",
-    description:
+    desc:
       "An automation system built using arduino that performs home automation functions like opening and closing of curtains at certain times, and using sensors to alert for intruders.",
     subdesc:
       "I simulated this application on wokwi in the browser(can be used with Visual Studio Code as well). I used servo motors,rtc and motion sensors for the system",
-    texture: "/textures/project/project5.mp4",
+    texture: "/textures/project/project3.mp4",
     spotlight: "/assets/spotlight5.png",
     logoStyle: {
       backgroundColor: "#1C1A43",
@@ -339,7 +339,7 @@ const Projects = [
   },
   {
     title: "Temperature and humidity sensor",
-    description:
+    desc:
       "An IoT temperature and humidity system built using ESP32 module and sensors.The sensors pick data from the environment and send to the ESP32 which sends data to a server that saves it and displays to a react frontend. Can be useful for agricultural purposes.",
     subdesc:
       "I used a Temperature and humidity sensor to send data to esp32 module. I used my laptop's Ip address as the server and sent the data to the server with the http and wifi library, saved the data to mongodb and displayed it on the browser.",
@@ -351,7 +351,7 @@ const Projects = [
     logo: "/assets/Iot.png",
     href: "https://github.com/Storm00212/Temperature-and-humidity-sensor-using-esp32-and-MERN-stack",
     spotlight: "/assets/spotlight2.png",
-    texture: "/textures/project/project2.mp4",
+    texture: "/textures/project/project4.mp4",
     tags: [
       {
         id: 1,
@@ -368,12 +368,12 @@ const Projects = [
   },
   {
     title: "Vending machine microcontroller.",
-    description:
+    desc:
       "Used combinational and sequential logic in digital electronics to build the microcotroller of a vending machine allowing different coin denominations and code typing to select food items.",
     subdesc:
       "I used counters and BCD adders for the coin counter logic. I then connected values to comparators to check if the user amount met the prices and used leds to indicate.For item selection I connected a 4 by 4 keypad to a decoder whose output was connected to the dipensing circuit after which the machine reset once an item was bought",
     logo: "/assets/vending.png",
-    texture: "/textures/project/project1.mp4",
+    texture: "/textures/project/project5.mp4",
     href: "https://github.com/Storm00212/Vending-machine",
     logoStyle: {
       backgroundColor: "#2A1816",
@@ -383,12 +383,14 @@ const Projects = [
     spotlight: "/assets/spotlight1.png",
     tags: [
       {
+        id: 1,
         name: "Proteus 8",
-        color: "blue-text-gradient",
+        path: engineer,
       },
       {
+        id: 2,
         name: "Digital Electronics",
-        color: "green-text-gradient",
+        path: electronics,
       },
     ],
   },

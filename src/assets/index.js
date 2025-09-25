@@ -4,9 +4,7 @@ import creator from "./creator.png";
 import mobile from "./mobile.png";
 import web from "./web.png";
 import github from "./github.png";
-import teach2give from "./tech/teach2give.jpg";
 import dekut from "./tech/dekut.png";
-
 import css from "./tech/css.png";
 import projects from "./tech/projects.png";
 import herobg from "./herobg.png";
@@ -35,10 +33,16 @@ import engineer from "./tech/engineer.jpg";
 import Arduino from "./tech/Arduino.png";
 import Iot from "./tech/Iot.png";
 import dkuthackathon from "./tech/dkuthackathon.png";
+import teach2give from "./tech/teach2give.jpg";
+import Alliance from "./tech/Alliance.png";
+import dkut from "./tech/dkut.png";
 
 
 
 export {
+  dkut,
+  Alliance,
+  teach2give,
   mobile,
   projects,
   AI,
@@ -73,5 +77,4 @@ export {
   Iot,
   github,
   herobg,
-  teach2give
 };

@@ -1,6 +1,7 @@
 import React from 'react'
 import AboutHeroSection from './AboutHeroSection';
 import Description from './Description';
+import Education from './Education';
 import Tech from './Tech';
 import { herobg } from '../assets';
 
@@ -22,6 +23,7 @@ function About() {
     >
       <AboutHeroSection />
       <Description />
+      <Education />
       <Tech />
       
       {/* ...other content... */}

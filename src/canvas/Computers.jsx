@@ -15,8 +15,6 @@ const Computers = ({ isMobile }) => {
         angle={0.12}
         penumbra={1}
         intensity={1}
-        castShadow
-        shadow-mapSize={1024}
       />
       <pointLight intensity={1} />
       <primitive
@@ -56,8 +54,7 @@ const ComputersCanvas = () => {
   return (
     <Canvas
       frameloop='demand'
-      shadows
-      dpr={[1, 2]}
+      dpr={[1, 1.5]}
       camera={{ position: [20, 3, 5], fov: 25 }}
       gl={{ preserveDrawingBuffer: true }}
     >
@@ -75,4 +72,4 @@ const ComputersCanvas = () => {
   );
 };
 
-export default ComputersCanvas;
+export default React.memo(ComputersCanvas);

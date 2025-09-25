@@ -25,7 +25,7 @@ body:has(.card[data-color="green"]:hover) {
   background-color: rgb(var(--green-rgb) / 25%);
 }
 
-@layer utilities 
+@layer utilities {
   .max-container {
     max-width: 80rem; /* max-w-5xl */
     margin-left: auto; /* mx-auto */
@@ -37,7 +37,6 @@ body:has(.card[data-color="green"]:hover) {
     min-height: calc(100vh - 80px); /* min-h-[calc(100vh-80px)] */
   }
 
-  .head-text {
   .head-text {
     font-size: 3rem;
     font-weight: 600;
@@ -180,7 +179,11 @@ body:has(.card[data-color="green"]:hover) {
     margin: 0 auto;
     position: absolute;
     top: 0;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 10;
     right: 0;
     left: 0;
@@ -242,6 +245,31 @@ body:has(.card[data-color="green"]:hover) {
 
   .neo-btn {
     @apply py-3 px-6 rounded-lg text-blue-500 text-center font-semibold sm:w-1/2 w-[90%] -bottom-5 absolute mx-auto right-0 left-0 flex justify-center items-center gap-3;
+  }
+
+  .arrow-btn {
+    background: rgba(43, 119, 231, 0.1);
+    border: 2px solid #2b77e7;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
+    min-height: 50px;
+  }
+
+  .arrow-btn:hover {
+    background: #2b77e7;
+    transform: scale(1.05);
+  }
+
+  .arrow-btn img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
   }
 
   .cta {
@@ -343,90 +371,20 @@ body:has(.card[data-color="green"]:hover) {
 /* Neo Brutalism */
 .neo-brutalism-blue {
   background: #2b77e7;
-@keyframes mulShdSpin {
-  0%,
-  100% {
-    filter: drop-shadow(0em -2.6em 0em #ffffff)
-      drop-shadow(1.8em -1.8em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(2.5em 0em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(1.75em 1.75em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(0em 2.5em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-1.8em 1.8em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-2.6em 0em 0 rgba(255, 255, 255, 0.5))
-      drop-shadow(-1.8em -1.8em 0 rgba(255, 255, 255, 0.7));
-  }
-  12.5% {
-    filter: drop-shadow(0em -2.6em 0em rgba(255, 255, 255, 0.7))
-      drop-shadow(1.8em -1.8em 0 #ffffff)
-      drop-shadow(2.5em 0em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(1.75em 1.75em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(0em 2.5em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-1.8em 1.8em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-2.6em 0em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-1.8em -1.8em 0 rgba(255, 255, 255, 0.5));
-  }
-  25% {
-    filter: drop-shadow(0em -2.6em 0em rgba(255, 255, 255, 0.5))
-      drop-shadow(1.8em -1.8em 0 rgba(255, 255, 255, 0.7))
-      drop-shadow(2.5em 0em 0 #ffffff)
-      drop-shadow(1.75em 1.75em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(0em 2.5em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-1.8em 1.8em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-2.6em 0em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-1.8em -1.8em 0 rgba(255, 255, 255, 0.2));
-  }
-  37.5% {
-    filter: drop-shadow(0em -2.6em 0em rgba(255, 255, 255, 0.2))
-      drop-shadow(1.8em -1.8em 0 rgba(255, 255, 255, 0.5))
-      drop-shadow(2.5em 0em 0 rgba(255, 255, 255, 0.7))
-      drop-shadow(1.75em 1.75em 0 #ffffff)
-      drop-shadow(0em 2.5em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-1.8em 1.8em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-2.6em 0em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-1.8em -1.8em 0 rgba(255, 255, 255, 0.2));
-  }
-  50% {
-    filter: drop-shadow(0em -2.6em 0em rgba(255, 255, 255, 0.2))
-      drop-shadow(1.8em -1.8em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(2.5em 0em 0 rgba(255, 255, 255, 0.5))
-      drop-shadow(1.75em 1.75em 0 rgba(255, 255, 255, 0.7))
-      drop-shadow(0em 2.5em 0 #ffffff)
-      drop-shadow(-1.8em 1.8em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-2.6em 0em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-1.8em -1.8em 0 rgba(255, 255, 255, 0.2));
-  }
-  62.5% {
-    filter: drop-shadow(0em -2.6em 0em rgba(255, 255, 255, 0.2))
-      drop-shadow(1.8em -1.8em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(2.5em 0em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(1.75em 1.75em 0 rgba(255, 255, 255, 0.5))
-      drop-shadow(0em 2.5em 0 rgba(255, 255, 255, 0.7))
-      drop-shadow(-1.8em 1.8em 0 #ffffff)
-      drop-shadow(-2.6em 0em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-1.8em -1.8em 0 rgba(255, 255, 255, 0.2));
-  }
-  75% {
-    filter: drop-shadow(0em -2.6em 0em rgba(255, 255, 255, 0.2))
-      drop-shadow(1.8em -1.8em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(2.5em 0em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(1.75em 1.75em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(0em 2.5em 0 rgba(255, 255, 255, 0.5))
-      drop-shadow(-1.8em 1.8em 0 rgba(255, 255, 255, 0.7))
-      drop-shadow(-2.6em 0em 0 #ffffff)
-      drop-shadow(-1.8em -1.8em 0 rgba(255, 255, 255, 0.2));
-  }
-  87.5% {
-    filter: drop-shadow(0em -2.6em 0em rgba(255, 255, 255, 0.2))
-      drop-shadow(1.8em -1.8em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(2.5em 0em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(1.75em 1.75em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(0em 2.5em 0 rgba(255, 255, 255, 0.2))
-      drop-shadow(-1.8em 1.8em 0 rgba(255, 255, 255, 0.5))
-      drop-shadow(-2.6em 0em 0 rgba(255, 255, 255, 0.7))
-      drop-shadow(-1.8em -1.8em 0 #ffffff);
-  }
+  border-radius: 10px;
+  border: 2px solid #2b77e7;
+  box-shadow: 0.6vmin 0.6vmin #336cc1, 1vmin 1vmin #0092db, 1vmin 1vmin #0092db,
+    0.65vmin 1vmin #0092db, 1vmin 0.65vmin #0092db;
+  color: white;
 }
-  -webkit-text-fill-color: transparent;
+
+.neo-brutalism-white {
+  background: white;
+  border-radius: 10px;
+  border: 2px solid white;
+  box-shadow: 0.6vmin 0.6vmin #ccc, 1vmin 1vmin #ddd, 1vmin 1vmin #ddd,
+    0.65vmin 1vmin #ddd, 1vmin 0.65vmin #ddd;
+  color: #2b77e7;
 }
 
 .green-text-gradient {

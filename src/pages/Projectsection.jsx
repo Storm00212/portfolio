@@ -1,6 +1,6 @@
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Center, OrbitControls } from '@react-three/drei';
 
@@ -12,6 +12,9 @@ const projectCount = Projects.length;
 
 const Projectsection = () => {
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(0);
+  const [forceUpdate, setForceUpdate] = useState(0);
+
+  const currentProject = useMemo(() => Projects[selectedProjectIndex], [selectedProjectIndex]);
 
   const handleNavigation = (direction) => {
     setSelectedProjectIndex((prevIndex) => {
@@ -21,17 +24,69 @@ const Projectsection = () => {
         return prevIndex === projectCount - 1 ? 0 : prevIndex + 1;
       }
     });
+    setForceUpdate(prev => prev + 1);
   };
 
   useGSAP(() => {
-    gsap.fromTo(`.animatedText`, { opacity: 0 }, { opacity: 1, duration: 1, stagger: 0.2, ease: 'power2.inOut' });
+    gsap.killTweensOf('.animatedText');
+    gsap.fromTo(`.animatedText`, { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.05, ease: 'power2.inOut' });
   }, [selectedProjectIndex]);
 
-  const currentProject = Projects[selectedProjectIndex];
-
   return (
-    <section className="c-space my-20">
+    <section key={forceUpdate} className="c-space my-20">
+      {/* Hidden preload videos */}
+      <div style={{ display: 'none' }}>
+        {Projects.map((project, index) => (
+          <video key={index} src={project.texture} preload="auto" muted loop />
+        ))}
+      </div>
+
       <p className="head-text">My Selected Work</p>
+      <p className="text-white text-center">Project {selectedProjectIndex + 1} of {projectCount}</p>
+
+      <div className="flex justify-center items-center gap-10 mt-10 mb-10">
+
+        <button
+          type="button"
+          className="arrow-btn"
+          onMouseDown={(e) => { e.preventDefault(); handleNavigation('previous'); }}
+          onClick={() => handleNavigation('previous')}
+          style={{
+            backgroundColor: 'rgba(255, 0, 0, 0.1) !important',
+            borderColor: 'red !important',
+            cursor: 'pointer !important'
+          }}
+        >
+          Previous
+        </button>
+
+        <button
+          type="button"
+          className="arrow-btn"
+          onMouseDown={(e) => { e.preventDefault(); handleNavigation('next'); }}
+          onClick={() => handleNavigation('next')}
+          style={{
+            backgroundColor: 'rgba(0, 0, 255, 0.1) !important',
+            borderColor: 'blue !important',
+            cursor: 'pointer !important'
+          }}
+        >
+          Next
+        </button>
+
+      </div>
+
+      <div className="flex justify-center items-center mt-10 mb-10">
+        <a
+          key={currentProject.href}
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl border-2 border-blue-400"
+          href={currentProject.href || 'https://github.com'}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ textDecoration: 'none', color: 'white', fontWeight: 'bold' }}>
+          Check Github repo →
+        </a>
+      </div>
 
       <div className="grid lg:grid-cols-2 grid-cols-1 mt-12 gap-5 w-full">
         <div className="flex flex-col gap-5 relative sm:p-10 py-10 px-5 shadow-2xl shadow-black-200">
@@ -58,36 +113,17 @@ const Projectsection = () => {
                 </div>
               ))}
             </div>
-
-            <a
-              className="flex items-center gap-2 cursor-pointer text-white-600"
-              href={currentProject.href}
-              target="_blank"
-              rel="noreferrer">
-              <p>Check Github repo</p>
-              <img src="/assets/arrow-up.png" alt="arrow" className="w-3 h-3" />
-            </a>
-          </div>
-
-          <div className="flex justify-between items-center mt-7">
-            <button className="arrow-btn" onClick={() => handleNavigation('previous')}>
-              <img src="/assets/left-arrow.png" alt="left arrow" />
-            </button>
-
-            <button className="arrow-btn" onClick={() => handleNavigation('next')}>
-              <img src="/assets/right-arrow.png" alt="right arrow" className="w-4 h-4" />
-            </button>
           </div>
         </div>
 
         <div className="border border-black-300 bg-black-200 rounded-lg h-96 md:h-full">
-          <Canvas>
+          <Canvas dpr={[1, 1.5]}>
             <ambientLight intensity={Math.PI} />
             <directionalLight position={[10, 10, 5]} />
             <Center>
               <Suspense fallback={<CanvasLoader />}>
                 <group scale={2} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
-                  <DemoComputer texture={currentProject.texture} />
+                  <DemoComputer key={selectedProjectIndex} texture={currentProject.texture} />
                 </group>
               </Suspense>
             </Center>
@@ -100,3 +136,4 @@ const Projectsection = () => {
 };
 
 export default Projectsection;
+
